@@ -28,5 +28,16 @@ namespace CodingDojo.FooBarQix.Core.Tests
             string computedResult = StringHelper.Compute(input);
             Assert.AreEqual(result, computedResult);
         }
+
+        [DataTestMethod]
+        [DataRow("101", "1*1")]
+        [DataRow("303", "FooFoo*Foo")]
+        [DataRow("105", "FooBarQix*Bar")]
+        [DataRow("10101", "FooQix**")]
+        public void ShouldComputeRespectStep2(String input, String result)
+        {
+            string computedResult = StringHelper.Compute(input);
+            Assert.AreEqual(result, computedResult);
+        }
     }
 }

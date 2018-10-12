@@ -12,6 +12,7 @@ namespace CodingDojo.FooBarQix.Core
 
         private static readonly IDictionary<char, String> SubstitionMap = new Dictionary<char, String>()
         {
+            { '0', "*" },
             { '3', Foo },
             { '5', Bar },
             { '7', Qix }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CodingDojo.FooBarQix.Core
@@ -9,40 +11,51 @@ namespace CodingDojo.FooBarQix.Core
         private const string Bar = "Bar";
         private const string Qix = "Qix";
 
+        private static readonly IDictionary<char, String> SubstitionMap = new Dictionary<char, String>()
+        {
+            { '3', Foo },
+            { '5', Bar },
+            { '7', Qix }
+        };
+
         public static String Compute(String text)
         {
             Int32 input = Int32.Parse(text);
 
             StringBuilder strBuilder = new StringBuilder();
 
-            if (input % 3 == 0)
-                strBuilder.Append(Foo);
-
-            if (input % 5 == 0)
-                strBuilder.Append(Bar);
-
-            if (input % 7 == 0)
-                strBuilder.Append(Qix);
+            AppendIfDivisibleBy(input, 3, strBuilder, Foo);
+            AppendIfDivisibleBy(input, 5, strBuilder, Bar);
+            AppendIfDivisibleBy(input, 7, strBuilder, Qix);
 
             foreach (char c in text)
             {
-                if (c == '3')
-                    strBuilder.Append(Foo);
-
-                if (c == '5')
-                    strBuilder.Append(Bar);
-
-                if (c == '7')
-                    strBuilder.Append(Qix);
+                if (SubstitionMap.ContainsKey(c))
+                {
+                    string newStr = SubstitionMap[c];
+                    strBuilder.Append(newStr);
+                }
             }
 
-            if (strBuilder.Length != 0)
-            {
-                string result = strBuilder.ToString();
-                return result;
-            }
+            if(strBuilder.Length == 0)
+                strBuilder.Append(text);
 
-            return text;
+            string result = strBuilder.ToString();
+            return result;
         }
+
+        /// <summary>
+        /// Append <paramref name="value"/> to <paramref name="strBuilder"/> if <paramref name="input"/> is divisible by <paramref name="divisor"/>
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="divisor"></param>
+        /// <param name="strBuilder"></param>
+        /// <param name="value"></param>
+        private static void AppendIfDivisibleBy(int input, int divisor, StringBuilder strBuilder, string value)
+        {
+            if (input % divisor == 0)
+                strBuilder.Append(value);
+        }
+
     }
 }
